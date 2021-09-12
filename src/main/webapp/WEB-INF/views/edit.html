@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/users/edit}" th:object="${user}">
+    <label for="id"> Enter user id:</label>
+    <input readonly type="text" th:field="*{userId}" id="id"/>
+    <br>
+    <label for="name"> Enter new user name:</label>
+    <input type="text" th:field="*{userName}" id="name"/>
+    <br>
+    <label for="age"> Enter new user age:</label>
+    <input type="text" th:field="*{userAge}" id="age"/>
+    <br>
+    <label> Check field about criminal past:</label>
+    <input type="checkbox" th:field="*{danger}" /><br/>
+    <input type="submit" value="Update">
+    <br>
+</form>
+</body>
+</html>

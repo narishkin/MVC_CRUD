@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+<!--<table border="1">-->
+
+<!--    <tr>-->
+<!--        <th>User ID</th>-->
+<!--        <th>Name</th>-->
+<!--        <th>Age</th>-->
+<!--        <th>Criminal</th>-->
+<!--    </tr>-->
+
+<!--    <tr th:each="user :${userList}">-->
+<!--        <td th:href= "@{/users/{id}(id = ${userList.getUserId()})}" th:utext="${user.getUserId()}">ID</td>-->
+<!--        <td th:utext="${user.getUserName()}">Name</td>-->
+<!--        <td th:utext="${user.getUserAge()}">Age</td>-->
+<!--        <td th:utext="${user.getDanger()}">Criminal</td>-->
+<!--    </tr>-->
+
+<!--</table>-->
+
+<!--<div th:each="user :${userList}">-->
+
+<!--    <a th:href="@{/users/{id}/edit (id = ${user.getUserId()})}" th:utext="${user.getUserId()}">ID</a>-->
+<!--    <a th:utext="${user.getUserName()}">Name</a>-->
+<!--    <a th:utext="${user.getUserAge()}">Age</a>-->
+<!--    <a th:utext="${user.getDanger()}">Criminal</a>-->
+<!--</div>-->
+
+<div th:switch="${userList}">
+    <h2 th:case="null">No users found!</h2>
+    <div th:case="*">
+        <h2>Users</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Criminal</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${userList}">
+                <td th:text="${user.getUserId()}"></td>
+                <td th:text="${user.getUserName()}"></td>
+                <td th:text="${user.getUserAge()}"></td>
+                <td th:text="${user.getDanger()}"></td>
+                <td><a th:href="@{/users/edit/{id}(id=${user.userId})}">Edit</a></td>
+                <td><a th:href="@{/users/delete/{id}(id=${user.userId})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/users/new">Create user</a></p>
+</div>
+
+<!--<form th:method="GET" th:action="@{/users/new}" th:object="${model}">-->
+<!--    <br>-->
+<!--    <input type="submit" value="Create">-->
+<!--</form>-->
+
+</body>
+</html>
