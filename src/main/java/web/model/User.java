@@ -1,16 +1,38 @@
 package web.model;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.*;
+
+@Entity(name = "Http_users")
 public class User {
+
+    @Id
+    @SequenceGenerator(
+            name = "user_seq",
+            sequenceName = "user_seq",
+            allocationSize = 1)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "user_seq"
+    )
+    @Column(name = "user_id",
+    updatable = false)
     long userId;
+    @Column(name = "user_name",
+    nullable = false,
+    unique = true,
+    columnDefinition = "TEXT")
     String userName;
+    @Column(name = "user_age")
     int userAge;
+    @Column(name = "user_danger")
     boolean danger;
 
     public User() {
     }
 
-    public User(long userId, String userName, int userAge, boolean danger) {
-        this.userId = userId;
+    public User(String userName, int userAge, boolean danger) {
         this.userName = userName;
         this.userAge = userAge;
         this.danger = danger;
@@ -45,6 +67,17 @@ public class User {
     }
 
     public void setDanger(boolean danger) {
-         this.danger= danger;
+        this.danger = danger;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("User{");
+        sb.append("userId=").append(userId);
+        sb.append(", userName='").append(userName).append('\'');
+        sb.append(", userAge=").append(userAge);
+        sb.append(", danger=").append(danger);
+        sb.append('}');
+        return sb.toString();
     }
 }
