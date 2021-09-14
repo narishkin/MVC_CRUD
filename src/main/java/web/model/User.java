@@ -1,11 +1,8 @@
 package web.model;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.*;
 
 @Entity(name = "Http_users")
-@Transactional
 public class User {
 
     @Id
