@@ -26,11 +26,11 @@ public class UserDAOJPAImpl implements UserDAO {
 @Transactional
     @Override
     public List<User> listUsers() {
-//        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
-//        EntityManager entityManager = emf.createEntityManager();
-//        List list = entityManager.createQuery("from http_users").getResultList();
-//        entityManager.close();
-        return null;
+        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
+        EntityManager entityManager = emf.createEntityManager();
+        List<User> list = entityManager.createQuery(" from web.model.User", User.class).getResultList();
+        entityManager.close();
+        return list;
     }
 
     @Transactional
