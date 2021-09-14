@@ -5,6 +5,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import web.model.User;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
@@ -43,20 +44,31 @@ public class UserDAOJPAImpl implements UserDAO {
 
     @Override
     public User showUser(long id) {
-        return null;
+        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
+        EntityManager entityManager = emf.createEntityManager();
+        User user = entityManager.find(User.class, id);
+        entityManager.close();
+        return user;
     }
 
     @Override
     public void update(Long id, User updatedUser) {
-
+        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(updatedUser);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Override
     public void deleteUser(Long id) {
-//        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
-//        EntityManager entityManager = emf.createEntityManager();
-//        entityManager.getTransaction().begin();
-//        entityManager.remove();
-
+        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        User user = entityManager.find(User.class, id);
+        entityManager.remove(user);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }
