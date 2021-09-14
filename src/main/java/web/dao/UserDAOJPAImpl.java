@@ -1,11 +1,10 @@
 package web.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import web.model.User;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
@@ -14,19 +13,21 @@ import java.util.List;
 @Repository
 public class UserDAOJPAImpl implements UserDAO {
 
-    @Autowired
     PlatformTransactionManager tm;
-
-
-    @Autowired
     LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean;
+
+    public UserDAOJPAImpl(@Qualifier("transactionManager") PlatformTransactionManager tm,
+                          @Qualifier("entityManagerFactory") LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean) {
+        this.tm = tm;
+        this.localContainerEntityManagerFactoryBean = localContainerEntityManagerFactoryBean;
+    }
 
 
     @Override
     public List<User> listUsers() {
         EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
         EntityManager entityManager = emf.createEntityManager();
-        List<User> list = entityManager.createQuery(" from web.model.User", User.class).getResultList();
+        List<User> list = entityManager.createQuery("from web.model.User", User.class).getResultList();
         entityManager.close();
         return list;
     }
