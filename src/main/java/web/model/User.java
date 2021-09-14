@@ -70,12 +70,10 @@ public class User {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("User{");
-        sb.append("userId=").append(userId);
-        sb.append(", userName='").append(userName).append('\'');
-        sb.append(", userAge=").append(userAge);
-        sb.append(", danger=").append(danger);
-        sb.append('}');
-        return sb.toString();
+        return "User{" + "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userAge=" + userAge +
+                ", danger=" + danger +
+                '}';
     }
 }
