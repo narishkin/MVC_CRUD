@@ -2,43 +2,50 @@ package web.service;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import web.dao.UserDAO;
+import org.springframework.transaction.annotation.Transactional;
+import web.dao.UserDao;
 import web.model.User;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 
-    UserDAO userDAO;
+    UserDao userDAO;
 
 
-    public UserServiceImpl(@Qualifier("userDAOJPAImpl") UserDAO userDAO) {
+    public UserServiceImpl(@Qualifier("userDaoImpl") UserDao userDAO) {
         this.userDAO = userDAO;
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public void saveUser(User user) {
-        userDAO.saveUser(user);
+    public List<User> getAll() {
+        return userDAO.getAll();
     }
 
-    public List<User> getUserList(){
-        return userDAO.listUsers();
-    }
-
+    @Transactional(readOnly = true)
     @Override
-    public User showUser(long id) {
-        return userDAO.showUser(id);
+    public User getById(long id) {
+        return userDAO.getById(id);
     }
 
+    @Transactional
+    @Override
+    public void save(User user) {
+        userDAO.save(user);
+    }
+
+    @Transactional
     @Override
     public void update(long id, User updatedUser) {
         userDAO.update(id, updatedUser);
     }
 
+    @Transactional
     @Override
-    public void deleteUser(long id) {
-        userDAO.deleteUser(id);
+    public void delete(long id) {
+        userDAO.delete(id);
     }
 }

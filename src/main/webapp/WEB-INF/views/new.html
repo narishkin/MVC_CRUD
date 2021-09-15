@@ -10,9 +10,6 @@
 </h1>
 
 <form th:method="POST" th:action="@{/users/new}" th:object="${user}">
-<!--    <label for="id"> Enter user Id:</label>-->
-<!--    <input type="text" th:field="*{id}" id="id"/>-->
-<!--    <br>-->
     <label for="name"> Enter user name:</label>
     <input type="text" th:field="*{name}" id="name"/>
     <br>

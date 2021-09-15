@@ -10,47 +10,47 @@ import web.service.UserService;
 
 @Controller
 @RequestMapping("/users")
-public class UsersController {
+public class UserController {
 
     private UserService userService;
 
     @Autowired
-    public UsersController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping()
-    public String readUsers(Model model) {
-        model.addAttribute("userList", userService.getUserList());
+    public String getAll(Model model) {
+        model.addAttribute("userList", userService.getAll());
         return "users";
     }
 
     @GetMapping("/new")
-    public String newUserPageForm(User user) {
+    public String createForm(User user) {
         return "new";
     }
 
     @PostMapping("/new")
-    public String createUserAction(User user) {
-        userService.saveUser(user);
+    public String create(User user) {
+        userService.save(user);
         return "redirect:/users";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
-        userService.deleteUser(id);
+    public String delete(@PathVariable("id") Long id) {
+        userService.delete(id);
         return "redirect:/users";
     }
 
 
     @GetMapping("/edit/{id}")
-    public String updateUserForm(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.showUser(id));
+    public String updateForm(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("user", userService.getById(id));
         return "edit";
     }
 
     @PostMapping("/edit")
-    public String updateUser(User user) {
+    public String update(User user) {
         userService.update(user.getId(), user);
         return "redirect:/users";
     }

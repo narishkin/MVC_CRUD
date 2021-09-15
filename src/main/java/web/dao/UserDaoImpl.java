@@ -11,12 +11,12 @@ import java.util.List;
 
 
 @Repository
-public class UserDAOJPAImpl implements UserDAO {
+public class UserDaoImpl implements UserDao {
 
     PlatformTransactionManager tm;
     LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean;
 
-    public UserDAOJPAImpl(@Qualifier("transactionManager") PlatformTransactionManager tm,
+    public UserDaoImpl(@Qualifier("transactionManager") PlatformTransactionManager tm,
                           @Qualifier("entityManagerFactory") LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean) {
         this.tm = tm;
         this.localContainerEntityManagerFactoryBean = localContainerEntityManagerFactoryBean;
@@ -24,7 +24,7 @@ public class UserDAOJPAImpl implements UserDAO {
 
 
     @Override
-    public List<User> listUsers() {
+    public List<User> getAll() {
         EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
         EntityManager entityManager = null;
         if (emf != null) {
@@ -36,7 +36,19 @@ public class UserDAOJPAImpl implements UserDAO {
     }
 
     @Override
-    public void saveUser(User user) {
+    public User getById(long id) {
+        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
+        EntityManager entityManager = null;
+        if (emf != null) {
+            entityManager = emf.createEntityManager();
+        }
+        User user = entityManager.find(User.class, id);
+        entityManager.close();
+        return user;
+    }
+
+    @Override
+    public void save(User user) {
         EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
         EntityManager entityManager = null;
         if (emf != null) {
@@ -48,18 +60,6 @@ public class UserDAOJPAImpl implements UserDAO {
         entityManager.close();
     }
 
-
-    @Override
-    public User showUser(long id) {
-        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
-        EntityManager entityManager = null;
-        if (emf != null) {
-            entityManager = emf.createEntityManager();
-        }
-        User user = entityManager.find(User.class, id);
-        entityManager.close();
-        return user;
-    }
 
     @Override
     public void update(Long id, User updatedUser) {
@@ -75,15 +75,14 @@ public class UserDAOJPAImpl implements UserDAO {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void delete(Long id) {
         EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
         EntityManager entityManager = null;
         if (emf != null) {
             entityManager = emf.createEntityManager();
         }
         entityManager.getTransaction().begin();
-        User user = entityManager.find(User.class, id);
-        entityManager.remove(user);
+        entityManager.remove(entityManager.find(User.class,id));
         entityManager.getTransaction().commit();
         entityManager.close();
     }
