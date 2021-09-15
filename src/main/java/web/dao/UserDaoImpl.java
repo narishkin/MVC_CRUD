@@ -1,89 +1,42 @@
 package web.dao;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.PlatformTransactionManager;
 import web.model.User;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    PlatformTransactionManager tm;
-    LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean;
 
-    public UserDaoImpl(@Qualifier("transactionManager") PlatformTransactionManager tm,
-                          @Qualifier("entityManagerFactory") LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean) {
-        this.tm = tm;
-        this.localContainerEntityManagerFactoryBean = localContainerEntityManagerFactoryBean;
-    }
+    @PersistenceContext
+    EntityManager entityManager;
 
 
     @Override
     public List<User> getAll() {
-        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
-        EntityManager entityManager = null;
-        if (emf != null) {
-            entityManager = emf.createEntityManager();
-        }
-        List<User> list = entityManager.createQuery("from web.model.User", User.class).getResultList();
-        entityManager.close();
-        return list;
+        return entityManager.createQuery("from web.model.User", User.class).getResultList();
     }
 
     @Override
     public User getById(long id) {
-        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
-        EntityManager entityManager = null;
-        if (emf != null) {
-            entityManager = emf.createEntityManager();
-        }
-        User user = entityManager.find(User.class, id);
-        entityManager.close();
-        return user;
+        return entityManager.find(User.class, id);
     }
 
     @Override
     public void save(User user) {
-        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
-        EntityManager entityManager = null;
-        if (emf != null) {
-            entityManager = emf.createEntityManager();
-        }
-        entityManager.getTransaction().begin();
         entityManager.persist(user);
-        entityManager.getTransaction().commit();
-        entityManager.close();
     }
 
-
     @Override
-    public void update(Long id, User updatedUser) {
-        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
-        EntityManager entityManager = null;
-        if (emf != null) {
-            entityManager = emf.createEntityManager();
-        }
-        entityManager.getTransaction().begin();
+    public void update(User updatedUser) {
         entityManager.merge(updatedUser);
-        entityManager.getTransaction().commit();
-        entityManager.close();
     }
 
     @Override
     public void delete(Long id) {
-        EntityManagerFactory emf = localContainerEntityManagerFactoryBean.getObject();
-        EntityManager entityManager = null;
-        if (emf != null) {
-            entityManager = emf.createEntityManager();
-        }
-        entityManager.getTransaction().begin();
-        entityManager.remove(entityManager.find(User.class,id));
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        entityManager.remove(entityManager.find(User.class, id));
     }
 }

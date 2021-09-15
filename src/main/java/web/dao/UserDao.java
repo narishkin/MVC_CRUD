@@ -13,7 +13,7 @@ public interface UserDao {
 
     void save(User user);
 
-    public void update(Long id, User updatedUser);
+    void update(User updatedUser);
 
-    public void delete(Long id);
+    void delete(Long id);
 }
