@@ -6,14 +6,14 @@
 </head>
 <body>
 <form th:method="POST" th:action="@{/users/edit}" th:object="${user}">
-    <label for="id"> Enter user id:</label>
-    <input readonly type="text" th:field="*{userId}" id="id"/>
+    <label for="userid"> Enter user id:</label>
+    <input readonly type="text" th:field="*{id}" id="userid"/>
     <br>
-    <label for="name"> Enter new user name:</label>
-    <input type="text" th:field="*{userName}" id="name"/>
+    <label for="username"> Enter new user name:</label>
+    <input type="text" th:field="*{name}" id="username"/>
     <br>
-    <label for="age"> Enter new user age:</label>
-    <input type="text" th:field="*{userAge}" id="age"/>
+    <label for="userage"> Enter new user age:</label>
+    <input type="text" th:field="*{age}" id="userage"/>
     <br>
     <label> Check field about criminal past:</label>
     <input type="checkbox" th:field="*{danger}" /><br/>

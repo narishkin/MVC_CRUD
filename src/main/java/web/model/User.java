@@ -2,7 +2,7 @@ package web.model;
 
 import javax.persistence.*;
 
-@Entity(name = "Http_users")
+@Entity(name = "users")
 public class User {
 
     @Id
@@ -11,68 +11,68 @@ public class User {
             sequenceName = "user_seq",
             allocationSize = 1)
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
+            strategy = GenerationType.IDENTITY,
             generator = "user_seq"
     )
-    @Column(name = "user_id",
+    @Column(name = "id",
     updatable = false)
-    long userId;
-    @Column(name = "user_name",
+    Long id;
+    @Column(name = "name",
     nullable = false,
     unique = true,
     columnDefinition = "TEXT")
-    String userName;
-    @Column(name = "user_age")
-    int userAge;
-    @Column(name = "user_danger")
-    boolean danger;
+    String name;
+    @Column(name = "age")
+    Integer age;
+    @Column(name = "danger")
+    Boolean danger;
 
     public User() {
     }
 
-    public User(String userName, int userAge, boolean danger) {
-        this.userName = userName;
-        this.userAge = userAge;
+    public User(String userName, Integer userAge, Boolean danger) {
+        this.name = userName;
+        this.age = userAge;
         this.danger = danger;
     }
 
-    public long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setId(Long userId) {
+        this.id = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String userName) {
+        this.name = userName;
     }
 
-    public int getUserAge() {
-        return userAge;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setUserAge(int userAge) {
-        this.userAge = userAge;
+    public void setAge(Integer userAge) {
+        this.age = userAge;
     }
 
-    public boolean getDanger() {
+    public Boolean getDanger() {
         return danger;
     }
 
-    public void setDanger(boolean danger) {
+    public void setDanger(Boolean danger) {
         this.danger = danger;
     }
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", userAge=" + userAge +
+        return "User{" + "userId=" + id +
+                ", userName='" + name + '\'' +
+                ", userAge=" + age +
                 ", danger=" + danger +
                 '}';
     }

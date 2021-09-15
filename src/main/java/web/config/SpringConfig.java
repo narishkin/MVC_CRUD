@@ -115,7 +115,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    Properties additionalProperties() {
+    private Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         properties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));

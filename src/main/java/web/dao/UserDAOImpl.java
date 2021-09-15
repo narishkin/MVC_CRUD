@@ -22,21 +22,21 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User showUser(final long id) {
-        return list.stream().filter(user -> user.getUserId() == id).findAny().orElse(null);
+        return list.stream().filter(user -> user.getId() == id).findAny().orElse(null);
     }
 
     @Override
     public void update(Long id, User updatedUser) {
     User userToBeUpdate = showUser(id);
-    userToBeUpdate.setUserName(updatedUser.getUserName());
-    userToBeUpdate.setUserAge(updatedUser.getUserAge());
+    userToBeUpdate.setName(updatedUser.getName());
+    userToBeUpdate.setAge(updatedUser.getAge());
     userToBeUpdate.setDanger(updatedUser.getDanger());
     }
 
     @Override
     public void deleteUser(Long id) {
         showUser(id);
-        list.removeIf(a -> a.getUserId()==id);
+        list.removeIf(a -> a.getId()==id);
     }
 
     @Override

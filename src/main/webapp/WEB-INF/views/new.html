@@ -11,13 +11,13 @@
 
 <form th:method="POST" th:action="@{/users/new}" th:object="${user}">
 <!--    <label for="id"> Enter user Id:</label>-->
-<!--    <input type="text" th:field="*{userId}" id="id"/>-->
+<!--    <input type="text" th:field="*{id}" id="id"/>-->
 <!--    <br>-->
     <label for="name"> Enter user name:</label>
-    <input type="text" th:field="*{userName}" id="name"/>
+    <input type="text" th:field="*{name}" id="name"/>
     <br>
     <label for="age"> Enter user age:</label>
-    <input type="text" th:field="*{userAge}" id="age"/>
+    <input type="text" th:field="*{age}" id="age"/>
     <br>
     <label> is Danger?</label>
     <input type="checkbox" th:field="*{danger}"/><br/>
