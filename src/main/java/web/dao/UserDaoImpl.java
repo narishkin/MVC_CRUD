@@ -11,6 +11,11 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
 
+    @Override
+    public User getUserByName(String s) {
+        return null;
+    }
+
     @PersistenceContext
     EntityManager entityManager;
 
