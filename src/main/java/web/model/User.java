@@ -17,11 +17,13 @@ public class User implements UserDetails {
     @Column(name = "id",
             updatable = false)
     private Long id;
+
     @Column(name = "name",
             nullable = false,
             unique = true,
             columnDefinition = "TEXT")
     private String name;
+    
     @Column(name = "password")
     private String password;
 
@@ -111,6 +113,13 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,10 +1,11 @@
 package web.dao;
 
+import org.springframework.stereotype.Repository;
 import web.model.User;
 
 import java.util.List;
 
-
+@Repository
 public interface UserDao {
 
     List<User> getAll();
@@ -17,5 +18,5 @@ public interface UserDao {
 
     void delete(Long id);
 
-    User getUserByName(String s);
+    User findByUserName(String username);
 }

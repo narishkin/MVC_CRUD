@@ -1,10 +1,8 @@
 package web.dao;
 
-import web.model.Role;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class RoleDaoImpl implements RoleDao{
-    @Override
-    public Role findByUsername(String username) {
-        return null;
-    }
+
 }
