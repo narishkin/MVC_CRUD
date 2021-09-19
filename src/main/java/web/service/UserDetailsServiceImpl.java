@@ -2,6 +2,7 @@ package web.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserDao userDao;
 
+    @Qualifier("users")
+    UserDetailsService userDetailsService;
 
 
     // «Пользователь» – это просто Object. В большинстве случаев он может быть
@@ -41,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 mapRolesAuthorities(user.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesAuthorities(Collection<Role> roles){
+    private Collection<? extends GrantedAuthority> mapRolesAuthorities(Collection<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
     }
 }
