@@ -6,7 +6,7 @@ import web.model.User;
 import java.util.List;
 
 @Repository
-public interface UserDao {
+public interface UserDao{
 
     List<User> getAll();
 

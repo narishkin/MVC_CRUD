@@ -23,7 +23,7 @@ public class User implements UserDetails {
             unique = true,
             columnDefinition = "TEXT")
     private String name;
-    
+
     @Column(name = "password")
     private String password;
 
@@ -36,8 +36,9 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, Integer age, Boolean danger) {
+    public User(String name, String password, Integer age, Boolean danger) {
         this.name = name;
+        this.password = password;
         this.age = age;
         this.danger = danger;
     }

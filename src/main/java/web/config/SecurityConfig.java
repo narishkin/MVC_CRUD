@@ -1,6 +1,8 @@
 package web.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,10 +14,19 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import web.config.handler.LoginSuccessHandler;
+import web.service.UserDetailsServiceImpl;
 
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Autowired
+    public void setUserDetailsServiceImpl(UserDetailsServiceImpl userDetailsServiceImpl) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -24,8 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .defaultSuccessUrl("/userhome")
                 .successHandler(new LoginSuccessHandler())
-//                .successForwardUrl("/admin/users")
-//                .loginProcessingUrl("/admin/users")
                 .and()
                 .logout().logoutSuccessUrl("/hello");
     }
@@ -34,31 +43,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(users()).passwordEncoder(passwordEncoder());
-//        auth.jdbcAuthentication().passwordEncoder(passwordEncoder());
-    }
+//    @Override
+//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(users()).passwordEncoder(passwordEncoder());
+////        auth.jdbcAuthentication().passwordEncoder(passwordEncoder());
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    @Bean
-    public UserDetailsService users(){
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password("1")
-                .roles("ADMIN")
-                .build();
-        UserDetails user = User.builder()
-                .username("user")
-                .password("1")
-                .roles("USER")
-                .build();
-        return new  InMemoryUserDetailsManager(admin, user);
-    }
+//    @Bean
+//    public UserDetailsService users(){
+//        UserDetails admin = User.builder()
+//                .username("admin")
+//                .password("1")
+//                .roles("ADMIN")
+//                .build();
+//        UserDetails user = User.builder()
+//                .username("user")
+//                .password("1")
+//                .roles("USER")
+//                .build();
+//        return new  InMemoryUserDetailsManager(admin, user);
+//    }
 
 
 //    @Bean
@@ -78,5 +87,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        jdbcUserDetailsManager.createUser(user);
 //        return jdbcUserDetailsManager;
 //    }
+
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
+        return daoAuthenticationProvider;
+    }
 
 }
