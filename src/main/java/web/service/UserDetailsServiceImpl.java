@@ -31,20 +31,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     UserDetailsService userDetailsService;
 
 
+
+    public UserDetailsServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     // «Пользователь» – это просто Object. В большинстве случаев он может быть
     //  приведен к классу UserDetails.
     // Для создания UserDetails используется интерфейс UserDetailsService, с единственным методом:
-
+//    @Override
+//    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+//        return userDao.findByUserName(s);
+//    }
     @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByUserName(username);
-
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                mapRolesAuthorities(user.getRoles()));
-    }
-
-    private Collection<? extends GrantedAuthority> mapRolesAuthorities(Collection<Role> roles) {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userDetailsService.loadUserByUsername(s);
     }
 }

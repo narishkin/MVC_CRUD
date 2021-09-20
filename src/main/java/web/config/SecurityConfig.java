@@ -11,12 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import web.config.handler.LoginSuccessHandler;
-
-import javax.sql.DataSource;
 
 
 @EnableWebSecurity
@@ -28,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/userhome")
-                .successHandler(authenticationSuccessHandler())
+                .successHandler(new LoginSuccessHandler())
 //                .successForwardUrl("/admin/users")
 //                .loginProcessingUrl("/admin/users")
                 .and()
@@ -84,8 +79,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return jdbcUserDetailsManager;
 //    }
 
-    @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler(){
-        return new SimpleUrlAuthenticationSuccessHandler();
-    }
 }
