@@ -26,13 +26,16 @@
                 <td th:text="${user.getName()}"></td>
                 <td th:text="${user.getAge()}"></td>
                 <td th:text="${user.getDanger()}"></td>
-                <td><a th:href="@{/users/edit/{id}(id=${user.id})}">Edit</a></td>
-                <td><a th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a></td>
+                <td><a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Edit</a></td>
+                <td><a th:href="@{/admin/users/delete/{id}(id=${user.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a href="/users/new">Create user</a></p>
+    <p><a href="/admin/users/new">Create user</a></p>
+    <form method="get" action="/logout">
+        <button type="submit">Logout</button>
+    </form>
 </div>
 
 </body>

@@ -11,9 +11,9 @@ public class CommonController {
         return "hello";
     }
 
-    @GetMapping("/userhome")
+    @GetMapping("/user")
     public String getUserHomePage(){
-        return "userhome";
+        return "user";
     }
 
     @GetMapping("/admin")
