@@ -5,15 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.UserDao;
 import web.model.User;
-
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-
     UserDao userDAO;
-
 
     public UserServiceImpl(@Qualifier("userDaoImpl") UserDao userDAO) {
         this.userDAO = userDAO;
@@ -48,6 +45,4 @@ public class UserServiceImpl implements UserService {
     public void delete(long id) {
         userDAO.delete(id);
     }
-
-
 }

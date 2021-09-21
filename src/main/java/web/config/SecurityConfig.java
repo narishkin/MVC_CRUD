@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import web.config.handler.LoginSuccessHandler;
 import web.service.UserDetailsServiceImpl;
 
-
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -34,11 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutSuccessUrl("/hello");
     }
-
-
-
-
-
 //    @Override
 //    public void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.userDetailsService(users()).passwordEncoder(passwordEncoder());
@@ -65,7 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return new  InMemoryUserDetailsManager(admin, user);
 //    }
 
-
 //    @Bean
 //    public JdbcUserDetailsManager users(DataSource dataSource){
 //        UserDetails admin = User.builder()
@@ -91,5 +84,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
         return daoAuthenticationProvider;
     }
-
 }

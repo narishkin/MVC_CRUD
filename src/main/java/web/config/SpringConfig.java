@@ -34,19 +34,14 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class SpringConfig implements WebMvcConfigurer {
 
-
     private final ApplicationContext applicationContext;
     private final Environment env;
-
 
     @Autowired
     public SpringConfig(Environment env, ApplicationContext applicationContext) {
         this.env = env;
         this.applicationContext = applicationContext;
     }
-
-
-
 
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
@@ -65,7 +60,6 @@ public class SpringConfig implements WebMvcConfigurer {
         return templateEngine;
     }
 
-
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
@@ -73,9 +67,7 @@ public class SpringConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 
-
     /*Entity Manager JPA Configuration */
-
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -101,7 +93,6 @@ public class SpringConfig implements WebMvcConfigurer {
         return dataSource;
     }
 
-
     @Bean
     public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -120,7 +111,6 @@ public class SpringConfig implements WebMvcConfigurer {
         properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         properties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-
         return properties;
     }
 }
