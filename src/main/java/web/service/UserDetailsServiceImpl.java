@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import web.dao.UserDao;
 import web.model.Role;
 import web.model.User;
@@ -21,8 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private UserDao userDao;
 
-    //    @Qualifier("users")
-//    UserDetailsService userDetailsService;
 
     @Autowired
     public UserDetailsServiceImpl(UserDao userDao) {
@@ -33,23 +30,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     //  приведен к классу UserDetails.
     // Для создания UserDetails используется интерфейс UserDetailsService, с единственным методом:
 
-    @Transactional
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userDao.findByUserName(s);
+        User user = userDao.getById(1);
+        if (user == null){
+            throw  new UsernameNotFoundException(s);
+        }
 
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(),
-//                user.getPassword(), mapRolesToAuthorities(user.getRoles()));
-        return user;
+        return new org.springframework.security.core.userdetails.User(user.getName(),
+                user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+//        return user;
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
     }
 
-
-//    @Override
-//    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-//        return userDetailsService.loadUserByUsername(s);
-//    }
 }

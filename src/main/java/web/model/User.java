@@ -36,9 +36,8 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String password, Integer age, Boolean danger) {
+    public User(String name, Integer age, Boolean danger) {
         this.name = name;
-        this.password = password;
         this.age = age;
         this.danger = danger;
     }
@@ -108,7 +107,7 @@ public class User implements UserDetails {
         return Objects.hash(id);
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
